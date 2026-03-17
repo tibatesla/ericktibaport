@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Magic Line Logic  ---
+    // --- Magic Line Logic ---
     const nav = document.querySelector('.nav-links');
     let magicLine = document.querySelector('.magic-line');
     
@@ -40,7 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function moveLine(target) {
-        if (!target || window.innerWidth <= 900) return;
+        // Prevent the line from highlighting the new CV download button
+        if (!target || window.innerWidth <= 900 || target.classList.contains('download-btn')) return;
+        
         const linkRect = target.getBoundingClientRect();
         const navRect = nav.getBoundingClientRect();
         magicLine.style.width = `${linkRect.width}px`;
@@ -48,26 +50,30 @@ document.addEventListener('DOMContentLoaded', () => {
         magicLine.style.opacity = '1';
     }
 
-    const activeLink = document.querySelector('.nav-links a.active');
+    // Ensure 
+    const activeLink = document.querySelector('.nav-links a.active:not(.download-btn)');
     if (activeLink) setTimeout(() => moveLine(activeLink), 50);
 
-    const navItems = document.querySelectorAll('.nav-links a');
+    // Only apply hover logic to standard navigation items
+    const navItems = document.querySelectorAll('.nav-links a:not(.download-btn)');
     navItems.forEach(link => {
         link.addEventListener('mouseenter', (e) => moveLine(e.target));
     });
 
     nav.addEventListener('mouseleave', () => {
         if (activeLink) moveLine(activeLink);
-        else magicLine.style.opacity = '0';
+        else if (magicLine) magicLine.style.opacity = '0';
     });
 });
 
 // --- EMAIL SENDING LOGIC ---
 function validateForm() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    // Fetch the values from the DOM
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
 
+    // Basic frontend validation
     if (name.length < 2) {
         alert("Please enter a valid name.");
         return false;
@@ -83,14 +89,16 @@ function validateForm() {
         return false;
     }
 
-    // THE EMAIL GOES
-    const myEmail = "tibatesla@gmail.com"; 
+    // The destination email
+    const myEmail = "erickmbaluka7@gmail.com"; 
     
-    const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+    // Using encodeURIComponent to safely format the text for the email client
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
     
-    // Open the user's Email App with everything filled in
+    // Triggers the default mail client (Outlook, Apple Mail, Gmail web handler, etc.)
     window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
 
-    return false; // Prevents the page from reloading
+    // Prevents form submission from reloading the page
+    return false; 
 }
