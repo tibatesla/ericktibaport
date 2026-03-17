@@ -124,43 +124,47 @@ button { background: var(--gold); color: #000; font-weight: 700; padding: 12px 3
 
 /* --- HIGH-END MOBILE STYLE --- */
 @media (max-width: 900px) {
-    header { padding: 1rem 1.2rem; height: 80px; /* Enforce height for alignment */ }
+    header { 
+        padding: 1rem 1.2rem; 
+        height: 80px; 
+    }
     
-    /* Profile: Show Name, cleaner look */
     .profile-info h3 { display: block; font-size: 1rem; } 
     .profile-info p { display: none; }
     .social, .magic-line { display: none !important; }
     .menu-toggle { display: flex; }
 
-    /* The Sidebar */
+    /* The Sidebar Layout */
     .nav-links {
         position: fixed;
         top: 80px; 
         right: -100%;
-        width: 80%; max-width: 300px;
+        width: 80%; 
+        max-width: 300px;
         height: calc(100vh - 80px); 
         background: rgba(15, 17, 21, 0.98);
         -webkit-backdrop-filter: blur(20px);
         backdrop-filter: blur(20px);
+        display: flex; 
         flex-direction: column;
         justify-content: flex-start;
-        padding-top: 2rem; 
-        padding-left: 2.5rem;
-        gap: 2rem;
+        align-items: flex-start; /* Left align for professional look */
+        padding: 2rem; 
+        gap: 1.5rem;
         transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 3000; /* sit above header and toggle */
-        pointer-events: auto;
+        z-index: 3000;
         box-shadow: -10px 10px 30px rgba(0,0,0,0.6);
         border-left: 1px solid var(--border-color);
         border-top: 1px solid var(--border-color);
         border-radius: 16px 0 0 0; 
+        overflow-y: auto;
     }
+
     .nav-links.active { right: 0; }
 
-    /* Sidebar Links */
     .nav-links a {
         font-family: var(--serif-font);
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 500;
         color: var(--text-muted);
         text-transform: capitalize;
@@ -168,21 +172,22 @@ button { background: var(--gold); color: #000; font-weight: 700; padding: 12px 3
         position: relative;
     }
 
-    /* Active Link Styling */
     .nav-links a.active { color: var(--text-main); }
     .nav-links a.active::before {
         content: ''; position: absolute;
-        left: -20px; top: 50%; transform: translateY(-50%);
-        height: 1px; width: 12px; background: var(--gold);
+        left: -15px; top: 50%; transform: translateY(-50%);
+        height: 1px; width: 8px; background: var(--gold);
     }
+
     /* CV Button for Mobile */
     .nav-links a.download-btn {
         font-family: 'Inter', sans-serif;
         font-size: 1rem;
         background: var(--gold);
         color: #000 !important;
-        padding: 10px 20px;
-        width: fit-content;
+        padding: 12px 20px;
+        width: 100%; /* Full width button in sidebar */
+        text-align: center;
         margin-left: 0;
         margin-top: 10px;
         border-radius: 5px;
@@ -190,30 +195,44 @@ button { background: var(--gold); color: #000; font-weight: 700; padding: 12px 3
         font-weight: bold;
     }
     
-    .nav-links a.download-btn::before {
-        display: none; 
-    }
+    .nav-links a.download-btn::before { display: none; }
 
-    /* Mobile Socials Footer */
+    /* Mobile Socials Footer - FORCED VISIBLE */
     .mobile-socials {
-        display: flex; gap: 1.5rem;
-        margin-top: auto;
-        margin-bottom: 2rem; /* Space from bottom of phone */
+        display: flex !important; 
+        gap: 1.5rem;
+        margin-top: auto; 
         padding-top: 1.5rem;
         border-top: 1px solid var(--border-color);
-        width: 85%;
+        width: 100%;
+        justify-content: center;
     }
-    .mobile-socials a { font-size: 1.3rem; }
+    .mobile-socials a { font-size: 1.4rem; color: var(--text-main); }
 
-    /* Content Adjustment */
-    main { padding: 1.2rem; margin-top: 90px; }
+    /* Content Adjustment for Mobile Alignment */
+    main { 
+        padding: 1.5rem; 
+        margin-top: 90px; 
+        text-align: left; 
+    }
+    
     section { padding: 2rem 1.2rem; }
-    h1 { font-size: 1.7rem; line-height: 1.2; margin-bottom: 1rem; }
+    
+    .hero-content { text-align: left !important; }
+    
+    h1 { 
+        font-size: 1.8rem; 
+        line-height: 1.2; 
+        margin-bottom: 1rem; 
+        text-align: left; 
+    }
+    
     .skills-grid { grid-template-columns: 1fr; }
 }
 
+/* Base Desktop Button Style (Kept outside media query) */
 .download-btn {
-    background: var(--gold); /* Use your gold variable */
+    background: var(--gold);
     color: #000 !important;
     padding: 5px 15px;
     border-radius: 5px;
